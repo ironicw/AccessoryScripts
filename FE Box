@@ -1,0 +1,26 @@
+lp = game.Players.LocalPlayer
+char = lp.Character
+
+acc = char["VANS_Umbrella"]
+handle = acc["Handle"]
+rleg = char["Right Leg"]
+lleg = char["Left Leg"]
+larm = char["Left Arm"]
+rarm = char["Right Arm"]
+torso = char["Torso"]
+head = char["Head"]
+
+rleg:Destroy()
+lleg:Destroy()
+larm:Destroy()
+rarm:Destroy()
+
+handle.Mesh:Destroy()
+handle.CanCollide = true
+handle:BreakJoints()
+
+getgenv().auto = true
+while getgenv().auto == true do
+    handle.CFrame = head.CFrame * CFrame.new(0, -1, 0)
+    task.wait()
+end
