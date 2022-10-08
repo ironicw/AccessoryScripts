@@ -1,3 +1,5 @@
+-- VANS UMBRELLA REQUIRED FOR THE SCRIPT TO WORK
+
 lp = game.Players.LocalPlayer
 char = lp.Character
 
