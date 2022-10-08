@@ -1,0 +1,88 @@
+-- VANS Umbrella required to work
+
+-- // netless // --
+
+loadstring(game:HttpGet("https://pastebin.com/raw/JitYf4SW", true))()
+
+-- // variables // --
+
+lp = game.Players.LocalPlayer
+char = lp.Character
+acc = char["VANS_Umbrella"]
+acc2 = char["Tophat"]
+handle = acc["Handle"]
+handle2 = acc2["Handle"]
+rleg = char["Right Leg"]
+lleg = char["Left Leg"]
+larm = char["Left Arm"]
+rarm = char["Right Arm"]
+torso = char["Torso"]
+head = char["Head"]
+local chatEvents = game:GetService("ReplicatedStorage"):WaitForChild("DefaultChatSystemChatEvents")
+local messageDoneFiltering = chatEvents:WaitForChild("OnMessageDoneFiltering")
+
+-- // checking if its a specialmesh or a mesh // --
+
+if handle:FindFirstChild("SpecialMesh") then
+    handle.SpecialMesh:Destroy()
+elseif handle:FindFirstChild("Mesh") then
+    handle.Mesh:Destroy()
+end
+
+if handle2:FindFirstChild("SpecialMesh") then
+    handle2.SpecialMesh:Destroy()
+elseif handle2:FindFirstChild("Mesh") then
+    handle2.Mesh:Destroy()
+end
+
+-- // breaking joints and colliding // --
+
+handle.CanCollide = true
+handle:BreakJoints()
+handle2.CanCollide = true
+handle2:BreakJoints()
+
+handle.CFrame = handle.CFrame * CFrame.new(0, 500, 0)
+handle2.CFrame = handle2.CFrame * CFrame.new(0, 500, 0)
+handle.Anchored = true
+handle2.Anchored = true
+
+-- // annoy process // --
+
+messageDoneFiltering.OnClientEvent:Connect(function(message)
+   local player = game.Players:FindFirstChild(message.FromSpeaker)
+   local message = message.Message or ""
+   if tostring(message) == ".stop" then
+       getgenv().auto = false
+       handle.CFrame = handle.CFrame * CFrame.new(0, 500, 0)
+       handle2.CFrame = handle2.CFrame * CFrame.new(0, 500, 0)
+       handle.Anchored = true
+       handle2.Anchored = true
+   elseif string.find(tostring(message), '.cube') then
+       local String = message:gsub('.cube ', '')
+       victim = String
+       print(victim)
+       handle.Anchored = false
+       handle2.Anchored = false
+       getgenv().auto = true
+       if game.Players[String].Character:FindFirstChild("Torso") then
+        while getgenv().auto == true do
+            handle.CFrame = game.Players[String].Character.Torso.CFrame
+            handle2.CFrame = game.Players[String].Character.Torso.CFrame * CFrame.new(0, 2, 0)
+            task.wait()
+            handle2.CFrame = game.Players[String].Character.Torso.CFrame * CFrame.new(0, -2, 0)
+            handle.CFrame = game.Players[String].Character.Torso.CFrame * CFrame.new(0, 1.2, 0)
+            task.wait()
+        end
+    elseif game.Players[String].Character:FindFirstChild("UpperTorso") then
+        while getgenv().auto == true do
+            handle.CFrame = game.Players[String].Character.UpperTorso.CFrame
+            handle2.CFrame = game.Players[String].Character.UpperTorso.CFrame * CFrame.new(0, 2, 0)
+            task.wait()
+            handle2.CFrame = game.Players[String].Character.UpperTorso.CFrame * CFrame.new(0, -2, 0)
+            handle.CFrame = game.Players[String].Character.UpperTorso.CFrame * CFrame.new(0, 1.2, 0)
+            task.wait()
+            end
+        end
+   end
+end)
