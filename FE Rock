@@ -1,0 +1,120 @@
+-- https://www.roblox.com/catalog/5231223671/Black-Tophead
+
+-- Settings --
+
+HUGEPET = false -- if this is true then you will need VANS Umbrella
+
+petbehind = "e" 
+petfront = "r"
+holdpet = "t"
+becomepet = "f"
+
+-- Variables
+
+lp = game.Players.LocalPlayer
+char = lp.Character
+local player = game.Players.LocalPlayer
+local mouse = player:GetMouse()
+
+-- getgenv's --
+
+getgenv().front = false
+getgenv().behind = false
+getgenv().hold = false
+getgenv().bpet = false
+
+-- Accessories --
+if HUGEPET == true then
+acc2 = char["VANS_Umbrella"]
+else
+acc2 = char["Tophat"]
+end
+glasses = char["MeshPartAccessory"]
+-- Handle --
+handle = acc2["Handle"]
+handle2 = glasses["Handle"]
+-- // Character parts --
+rleg = char["Right Leg"]
+lleg = char["Left Leg"]
+larm = char["Left Arm"]
+rarm = char["Right Arm"]
+torso = char["Torso"]
+head = char["Head"]
+
+--rleg:Destroy()
+--lleg:Destroy()
+--larm:Destroy()
+--rarm:Destroy()
+
+if handle:FindFirstChild("SpecialMesh") then
+    handle.SpecialMesh:Destroy()
+elseif handle:FindFirstChild("Mesh") then
+    handle.Mesh:Destroy()
+end
+handle.CanCollide = true
+handle:BreakJoints()
+handle2.CanCollide = true
+handle2:BreakJoints()
+
+-- Script
+
+mouse.KeyDown:connect(function(key)
+if key == petbehind then
+    handle.Anchored = false
+    getgenv().front = false
+    getgenv().hold = false
+    wait()
+    getgenv().behind = true
+    while getgenv().behind == true do
+        handle.CFrame = head.CFrame * CFrame.new(2.1, -3.70, 3.75)
+        handle2.CFrame = head.CFrame * CFrame.new(2.1, -3.50, 2.88)
+        task.wait()
+    end
+end
+end)
+
+mouse.KeyDown:connect(function(key2)
+if key2 == petfront then
+    handle.Anchored = false
+    getgenv().behind = false
+    getgenv().hold = false
+    wait()
+    getgenv().front = true
+    while getgenv().front == true do
+        handle.CFrame = head.CFrame * CFrame.new(2.1, -3.75, -4.25)
+        handle2.CFrame = head.CFrame * CFrame.new(2.1, -3.50, -5.08)
+        task.wait()
+    end
+end
+end)
+
+mouse.KeyDown:connect(function(key)
+if key == holdpet then
+    handle.Anchored = false
+    getgenv().front = false
+    wait()
+    getgenv().behind = false
+    getgenv().hold = true
+    while getgenv().hold == true do
+        handle.CFrame = rarm.CFrame * CFrame.new(0, -1.5, 0)
+        handle2.CFrame = rarm.CFrame * CFrame.new(0, -1.5, -0.8)
+        task.wait()
+    end
+end
+end)
+
+mouse.KeyDown:connect(function(key)
+if key == becomepet then
+    handle.Anchored = false
+    getgenv().front = false
+    wait()
+    getgenv().behind = false
+    getgenv().hold = false
+    getgenv().bpet = true
+    while getgenv().bpet == true do
+        handle.CFrame = head.CFrame * CFrame.new(0, 0, 0)
+        handle2.CFrame = head.CFrame * CFrame.new(0, 0, -0.8)
+        task.wait()
+    end
+end
+end)
